@@ -1,0 +1,27 @@
+<h1>CENTRO MEDICO VETERINARIO BACKEND</h1>
+<h2>LISTADO DE MASCOTAS</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nombre del dueño</th>
+            <th>Nombre de la mascota</th>
+            <th>Cédula del dueño</th>
+            <th>Edad de la mascota</th>
+            <th>Teléfono del dueño</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each mascotas}}
+        <tr>
+            <td>{{nombre}}</td>
+            <td>{{cedula_duenio}}</td>
+            <td>{{nombre_duenio}}</td>
+            <td>{{edad}}</td>
+            <td>{{telefono_duenio}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<a class="volver" href="/">Volver</a>
+<a href="mascotas/agregar-mascota">Agregar mascota</a>
