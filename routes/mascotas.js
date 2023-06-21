@@ -16,5 +16,41 @@ router.get('/', function (req, res, next) {
 router.get('/agregar-mascota', function (req, res, next) {
     res.sendFile('registro-mascotas.html', { root: 'public' })
 });
+//Agregar mascotas
+router.post('/agregar', (req, res) => {
+    const cedula = req.body.cedula
+    const nombre = req.body.mascota
+    const nombre_duenio = req.body.duenio
+    const edad = req.body.edad
+    const telefono = req.body.telefono
+    connection.query(`INSERT INTO mascotas (cedula_duenio,nombre,nombre_duenio,edad,telefono_duenio) VALUES (${cedula},'${nombre}','${nombre_duenio}',${edad},${telefono});`, (error, results) => {
+        if (error) {
+            console.log("Error en la consulta", error)
+            res.status(500).send("Error en la consulta")
+        } else {
+            res.redirect('/mascotas')
+        }
+    });
+
+})
+//eliminar macotas
+router.get('/eliminar/:cedula', function (req, res, next) {
+    const cedula = req.params.cedula
+    connection.query(`DELETE FROM cita_medica WHERE id_mascota=${cedula}`, (error, results) => {
+        if (error) {
+            console.log("Error en la consulta", error)
+            res.status(500).send("Error en la consulta")
+        } else {
+            connection.query(`DELETE FROM mascotas WHERE cedula_duenio=${cedula}`, (error, results) => {
+                if (error) {
+                    console.log("Error en la consulta", error)
+                    res.status(500).send("Error en la consulta")
+                } else {
+                    res.redirect('/mascotas')
+                }
+            });
+        }
+    });
+});
 
 module.exports = router;

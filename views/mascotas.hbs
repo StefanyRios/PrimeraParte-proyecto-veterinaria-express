@@ -15,10 +15,11 @@
         {{#each mascotas}}
         <tr>
             <td>{{nombre}}</td>
-            <td>{{cedula_duenio}}</td>
             <td>{{nombre_duenio}}</td>
+            <td>{{cedula_duenio}}</td>
             <td>{{edad}}</td>
             <td>{{telefono_duenio}}</td>
+            <td><a href="/mascotas/eliminar/{{cedula_duenio}}">Eliminar</a></td>
         </tr>
         {{/each}}
     </tbody>
