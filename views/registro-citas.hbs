@@ -2,8 +2,8 @@
 <label for="cedula">Número de Cédula:<span> *</span></label>
 <select id="cedula" name="cedula" required>
     <option value="">------------------- Seleccione la cedula del dueño -------------------</option>
-    {{#each mascotas}}
-    <option value="{{cedula_duenio}}">{{cedula_duenio}}</option>
+    {{#each pacientes}}
+    <option value="{{cedula_paciente}}">{{cedula_paciente}}</option>
     {{/each}}
 </select><br>
 <label for="fecha">Fecha:<span> *</span></label>

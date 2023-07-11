@@ -35,10 +35,10 @@ router.post('/agregar', (req, res) => {
     const cedula = req.body.cedula;
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
-    const correo = req.body.correo;
     const consultorio = req.body.consultorio;
+    const correo = req.body.correo;
     const especialidad = req.body.especialidad;
-    connection.query(`INSERT INTO medicos (cedula, nombres, apellidos, especialidad,consultorio, correo) VALUES (${cedula},'${nombre}', '${apellido}', '${especialidad}', '${consultorio}', '${correo}')`, (error, result) => {
+    connection.query(`INSERT INTO medicos (cedula, nombres, apellidos,consultorio,correo ,especialidad ) VALUES (${cedula},'${nombre}', '${apellido}', '${consultorio}', '${correo}','${especialidad}',)`, (error, result) => {
         if (error) {
             console.log("Ocurrio un error en la ejecución", error)
             res.status(500).send("Error en la consulta");

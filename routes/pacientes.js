@@ -3,50 +3,50 @@ var router = express.Router();
 const { connection } = require('../database/conexion.js')
 
 router.get('/', function (req, res, next) {
-    connection.query('SELECT * FROM mascotas', (error, results) => {
+    connection.query('SELECT * FROM pacientes', (error, results) => {
         if (error) {
             console.log("Error en la consulta", error)
             res.status(500).send("Error en la consulta")
         } else {
-            res.render('mascotas', { title: 'mascotas', mascotas: results, opcion: 'disabled', estado: true })
+            res.render('pacientes', { title: 'pacientes', pacientes: results, opcion: 'disabled', estado: true })
         }
     });
 });
 
 router.get('/enviar/:clave', function (req, res, next) {
     const clave = req.params.clave;
-    connection.query('SELECT * FROM mascotas', (error, results) => {
+    connection.query('SELECT * FROM pacientes', (error, results) => {
         if (error) {
             console.log("Error en la consulta", error)
             res.status(500).send("Error en la consulta")
         } else {
-            res.render('mascotas', { title: 'mascotas', claveSeleccionada: clave, mascotas: results, opcion: 'disabled', estado: false })
+            res.render('pacientes', { title: 'pacientes', claveSeleccionada: clave, pacientes: results, opcion: 'disabled', estado: false })
         }
     });
 });
 
 
-router.get('/agregar-mascota', function (req, res, next) {
-    res.sendFile('registro-mascotas.html', { root: 'public' })
+router.get('/agregar-paciente', function (req, res, next) {
+    res.sendFile('registro-pacientes.html', { root: 'public' })
 });
-//Agregar mascotas
+//Agregar paciente
 router.post('/agregar', (req, res) => {
     const cedula = req.body.cedula
-    const nombre = req.body.mascota
-    const nombre_duenio = req.body.duenio
+    const nombre = req.body.paciente
+    const apellido = req.body.apellido
     const edad = req.body.edad
     const telefono = req.body.telefono
-    connection.query(`INSERT INTO mascotas (cedula_duenio,nombre,nombre_duenio,edad,telefono_duenio) VALUES (${cedula},'${nombre}','${nombre_duenio}',${edad},${telefono});`, (error, results) => {
+    connection.query(`INSERT INTO pacientes (cedula_paciente,nombre,apellido,edad,telefono) VALUES (${cedula},'${nombre}','${apellido}',${edad},${telefono});`, (error, results) => {
         if (error) {
             console.log("Error en la consulta", error)
             res.status(500).send("Error en la consulta")
         } else {
-            res.redirect('/mascotas')
+            res.redirect('/pacientes')
         }
     });
 
 })
-//eliminar macotas
+//eliminar pacientes
 router.get('/eliminar/:cedula', function (req, res, next) {
     const cedula = req.params.cedula
     connection.query(`DELETE FROM cita_medica WHERE id_mascota=${cedula}`, (error, results) => {
@@ -54,12 +54,12 @@ router.get('/eliminar/:cedula', function (req, res, next) {
             console.log("Error en la consulta", error)
             res.status(500).send("Error en la consulta")
         } else {
-            connection.query(`DELETE FROM mascotas WHERE cedula_duenio=${cedula}`, (error, results) => {
+            connection.query(`DELETE FROM pacientes WHERE cedula_paciente=${cedula}`, (error, results) => {
                 if (error) {
                     console.log("Error en la consulta", error)
                     res.status(500).send("Error en la consulta")
                 } else {
-                    res.redirect('/mascotas')
+                    res.redirect('/pacientes')
                 }
             });
         }
@@ -67,17 +67,20 @@ router.get('/eliminar/:cedula', function (req, res, next) {
 });
 
 router.post('/actualizar/:cedula', (req, res) => {
-    const cedula = req.params.cedula;
-    const nombre = req.body.mascota;
-    const nombre_duenio = req.body.duenio;
-    const edad = req.body.edad;
+
+    const cedula = req.body.cedula
+    const nombre = req.body.paciente
+    const apellido = req.body.apellido
+    const edad = req.body.edad
     const telefono = req.body.telefono;
-    connection.query(`UPDATE mascotas SET nombre='${nombre}', nombre_duenio='${nombre_duenio}', edad=${edad}, telefono_duenio=${telefono} WHERE cedula_duenio=${cedula}`, (error, result) => {
+
+;
+    connection.query(`UPDATE pacientes SET nombre='${nombre}', apellido='${apellido}', edad=${edad}, telefono=${telefono} WHERE cedula_paciente=${cedula}`, (error, result) => {
         if (error) {
             console.log("Ocurrio un error en la ejecución", error)
             res.status(500).send("Error en la consulta");
         } else {
-            res.redirect('/mascotas');
+            res.redirect('/pacientes');
         }
     });
 })

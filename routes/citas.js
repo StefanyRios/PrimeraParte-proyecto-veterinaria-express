@@ -3,7 +3,7 @@ var router = express.Router();
 const { connection } = require('../database/conexion.js')
 
 router.get('/', function (req, res, next) {
-    connection.query('SELECT cm.id,cm.fecha, cm.id_mascota, mas.nombre, med.nombres, med.apellidos, med.consultorio FROM cita_medica cm, mascotas mas, medicos med WHERE cm.id_mascota = mas.cedula_duenio AND cm.id_medico= med.cedula', (error, results) => {
+    connection.query('SELECT cm.id,cm.fecha, cm.id_paciente, pac.nombre, med.nombres, med.apellidos, med.consultorio FROM cita_medica cm, pacientes mas, medicos med WHERE cm.id_paciente = mas.cedula_paciente AND cm.id_medico= med.cedula', (error, results) => {
         if (error) {
             console.log("Error en la consulta", error)
             res.status(500).send("Error en la consulta")
@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/agregar-cita', function (req, res, next) {
-    connection.query('SELECT cedula_duenio FROM mascotas', (error, results) => {
+    connection.query('SELECT cedula_paciente FROM pacientes', (error, results) => {
         if (error) {
             console.log("Error en la consulta", error)
             res.status(500).send("Error en la consulta")
@@ -24,7 +24,7 @@ router.get('/agregar-cita', function (req, res, next) {
                     console.log("Error en la consulta", error)
                     res.status(500).send("Error en la consulta")
                 } else {
-                    res.render('registro-citas', { layout: 'registro', mascotas: results, medicos: results2 })
+                    res.render('registro-citas', { layout: 'registro', pacientes: results, medicos: results2 })
                 }
             });
         }
@@ -32,7 +32,7 @@ router.get('/agregar-cita', function (req, res, next) {
 });
 
 router.post('/agregar', function (req, res, next) {
-    const cedulaDuenio = req.body.cedula;
+    const cedulaPaciente = req.body.cedula;
     const fecha = req.body.fecha;
     const especialidad = req.body.especialidad;
     connection.query(`SELECT cedula FROM medicos WHERE especialidad='${especialidad}'`, (error, results) => {
@@ -41,7 +41,7 @@ router.post('/agregar', function (req, res, next) {
             res.status(500).send("Error en la consulta")
         } else {
             let cedulaMedico = results[0].cedula
-            connection.query(`INSERT INTO cita_medica (id_mascota, id_medico, fecha) VALUES (${cedulaDuenio},${cedulaMedico}, '${fecha}')`, (error, result) => {
+            connection.query(`INSERT INTO cita_medica (id_paciente, id_medico, fecha) VALUES (${cedulaPaciente},${cedulaMedico}, '${fecha}')`, (error, result) => {
                 if (error) {
                     console.log("Ocurrio un error en la ejecución", error)
                     res.status(500).send("Error en la consulta");

@@ -1,10 +1,10 @@
-<h1>CENTRO MEDICO VETERINARIO BACKEND</h1>
-<h2>LISTADO DE CITAS VETERINARIAS</h2>
+<h1>CENTRO MEDICO BACKEND</h1>
+<h2>LISTADO DE CITAS ESPECIALISTAS</h2>
 <table>
 <thead>
     <tr>
-        <th>Nombre mascota</th>
-        <th>Cedula dueño</th>
+        <th>Nombre Paciente</th>
+        <th>Cedula Paciente</th>
         <th>Nombre medico</th>
         <th>Consultorio</th>
         <th>Fecha</th>
@@ -14,8 +14,8 @@
 <tbody>
     {{#each citas}}
     <tr>
-        <td>{{nombre}}</td>
-        <td>{{id_mascota}}</td>
+        <td>{{nombre}}{{apellido}}</td>
+        <td>{{id_paciente}}</td>
         <td>{{nombres}} {{apellidos}}</td>
         <td>{{consultorio}}</td>
         <td>{{formatoFecha fecha}}</td>
